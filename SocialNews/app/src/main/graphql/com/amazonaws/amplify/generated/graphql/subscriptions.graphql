@@ -1,0 +1,115 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateNews {
+  onCreateNews {
+    id
+    title
+    synopsis
+    content
+    image {
+      bucket
+      key
+      region
+      localUri
+      mimeType
+    }
+    publishDate
+    comments {
+      items {
+        id
+        commenter
+        message
+      }
+      nextToken
+    }
+  }
+}
+subscription OnUpdateNews {
+  onUpdateNews {
+    id
+    title
+    synopsis
+    content
+    image {
+      bucket
+      key
+      region
+      localUri
+      mimeType
+    }
+    publishDate
+    comments {
+      items {
+        id
+        commenter
+        message
+      }
+      nextToken
+    }
+  }
+}
+subscription OnDeleteNews {
+  onDeleteNews {
+    id
+    title
+    synopsis
+    content
+    image {
+      bucket
+      key
+      region
+      localUri
+      mimeType
+    }
+    publishDate
+    comments {
+      items {
+        id
+        commenter
+        message
+      }
+      nextToken
+    }
+  }
+}
+subscription OnCreateComment {
+  onCreateComment {
+    id
+    news {
+      id
+      title
+      synopsis
+      content
+      publishDate
+    }
+    commenter
+    message
+  }
+}
+subscription OnUpdateComment {
+  onUpdateComment {
+    id
+    news {
+      id
+      title
+      synopsis
+      content
+      publishDate
+    }
+    commenter
+    message
+  }
+}
+subscription OnDeleteComment {
+  onDeleteComment {
+    id
+    news {
+      id
+      title
+      synopsis
+      content
+      publishDate
+    }
+    commenter
+    message
+  }
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/signIn"
+        android:title="Sign-in"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/uploadSampleData"
+        android:title="Upload sample data"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/refresh"
+        android:title="Refresh data"
+        app:showAsAction="ifRoom"/>
+
+</menu>

@@ -1,0 +1,23 @@
+type News @model {
+  id: ID!
+  title: String!
+  synopsis: String!
+  content: String!
+  publishDate: AWSDate!
+  comments: [Comment] @connection(name: "NewsComments")
+}
+
+type Comment @model {
+  id: ID!
+  news: News @connection(name: "NewsComments")
+  commenter: String!
+  message: String!
+}
+
+type S3Object @model {
+  bucket
+  key
+  region
+  localUri
+  mimeType
+}

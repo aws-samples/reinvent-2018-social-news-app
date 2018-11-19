@@ -1,0 +1,115 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateNews($input: CreateNewsInput!) {
+  createNews(input: $input) {
+    id
+    title
+    synopsis
+    content
+    image {
+      bucket
+      key
+      region
+      localUri
+      mimeType
+    }
+    publishDate
+    comments {
+      items {
+        id
+        commenter
+        message
+      }
+      nextToken
+    }
+  }
+}
+mutation UpdateNews($input: UpdateNewsInput!) {
+  updateNews(input: $input) {
+    id
+    title
+    synopsis
+    content
+    image {
+      bucket
+      key
+      region
+      localUri
+      mimeType
+    }
+    publishDate
+    comments {
+      items {
+        id
+        commenter
+        message
+      }
+      nextToken
+    }
+  }
+}
+mutation DeleteNews($input: DeleteNewsInput!) {
+  deleteNews(input: $input) {
+    id
+    title
+    synopsis
+    content
+    image {
+      bucket
+      key
+      region
+      localUri
+      mimeType
+    }
+    publishDate
+    comments {
+      items {
+        id
+        commenter
+        message
+      }
+      nextToken
+    }
+  }
+}
+mutation CreateComment($input: CreateCommentInput!) {
+  createComment(input: $input) {
+    id
+    news {
+      id
+      title
+      synopsis
+      content
+      publishDate
+    }
+    commenter
+    message
+  }
+}
+mutation UpdateComment($input: UpdateCommentInput!) {
+  updateComment(input: $input) {
+    id
+    news {
+      id
+      title
+      synopsis
+      content
+      publishDate
+    }
+    commenter
+    message
+  }
+}
+mutation DeleteComment($input: DeleteCommentInput!) {
+  deleteComment(input: $input) {
+    id
+    news {
+      id
+      title
+      synopsis
+      content
+      publishDate
+    }
+    commenter
+    message
+  }
+}

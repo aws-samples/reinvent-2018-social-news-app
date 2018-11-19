@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.amazonaws:aws-android-sdk-auth-ui-2.8.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-aws-android-sdk-auth-ui-2.8.4.aar/6dc0d5ef669c3489bb7b2d30331c09b8/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-aws-android-sdk-auth-ui-2.8.4.aar/6dc0d5ef669c3489bb7b2d30331c09b8/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-android-sdk-auth-ui/2.8.4/8ae2d8723fa6718f836f53ecc9ce9c4e5e9752e3/aws-android-sdk-auth-ui-2.8.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
