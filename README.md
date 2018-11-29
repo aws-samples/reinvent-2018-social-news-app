@@ -54,7 +54,7 @@ Successfully set up the new user.
 Find a workspace to clone the repository.
 
 ```
-git clone git@github.com:aws-samples/reinvent-2018-social-news-app.git
+git clone https://github.com/aws-samples/reinvent-2018-social-news-app.git
 ```
 
 Change your directory into the project.
