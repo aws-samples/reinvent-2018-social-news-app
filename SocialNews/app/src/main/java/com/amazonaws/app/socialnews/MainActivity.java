@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void uploadSampleData() {
         _uploadSampleData(CreateNewsInput.builder()
-                .id("123")
                 .title("Today I Learned a Coconut is a Seed")
                 .content("Who knew? I thought for the longest time that it was a fruit.")
                 .synopsis("Who knew?")
@@ -97,14 +96,12 @@ public class MainActivity extends AppCompatActivity {
                 .build()
         );
         _uploadSampleData(CreateNewsInput.builder()
-                .id("456")
                 .title("What animal sleeps 18 to 20 hours a day?")
                 .content("A koala")
                 .synopsis("The sleepiest animal in world...")
                 .publishDate("2018-11-18")
                 .build());
         _uploadSampleData(CreateNewsInput.builder()
-                .id("789")
                 .title("What body part never grows?")
                 .content("The eyeball is the only organism which does not grow from birth. " +
                         "It is fully grown when you are born. When you look at a baby's face, " +
