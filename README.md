@@ -5,7 +5,7 @@ Build a social news app.
 Tools you will need:
 - [Android Studio 3.2](https://developer.android.com/studio/)
   - Install an emulator for API level 28 *or* you may use a real device with Android Marshmallow and above
-- [Node.js/npm](https://nodejs.org)
+- [Node.js/npm v8+](https://nodejs.org)
 - An AWS account
 
 ## Install AWS Amplify CLI
@@ -22,6 +22,33 @@ After it has been installed configure it with your preferences.
 amplify configure
 ```
 
+Sample input and output:
+
+```
+$ amplify configure
+Follow these steps to set up access to your AWS account:
+
+Sign in to your AWS administrator account:
+https://console.aws.amazon.com/
+Press Enter to continue
+
+Specify the AWS Region
+? region:  us-west-2
+Specify the username of the new IAM user:
+? user name:  amplify-Q1HYV
+Complete the user creation using the AWS console
+https://console.aws.amazon.com/iam/home?region=undefined#/users$new?step=final&accessKey&userNames=amplify-Q1HYV&permissionType=policies&policies=arn:aws:iam::aws:policy%2FAdministratorAccess
+Press Enter to continue
+
+Enter the access key of the newly created user:
+? accessKeyId:   ABC*****************
+? secretAccessKey:  asdf*******************************
+This would update/create the AWS Profile in your local machine
+? Profile Name:  cli2
+
+Successfully set up the new user.
+```
+
 ## Clone the repository
 
 Find a workspace to clone the repository.
@@ -36,9 +63,7 @@ Change your directory into the project.
 cd reinvent-2018-social-news-app/SocialNews
 ```
 
-## Provision your backend
-
-### Initialize your project
+## Initialize your project
 
 This will create an `amplify` folder within your project to keep track of the state of your backend as you add authentication, api, and analytics.
 
@@ -84,7 +109,7 @@ CREATE_COMPLETE ocialews-20181126121957 AWS::CloudFormation::Stack Mon Nov 26 20
 Your project has been successfully initialized and connected to the cloud!
 ```
 
-### Add auth to your project
+## Add auth to your project
 
 This will add Amazon Cognito Userpools and Amazon Cognito Identity pools to your project. Amazon Cognito Userpools will be used to keep track of your users and give them accounts with username and password. Amazon Cognito Identity pools will then give those accounts permissions to access AWS resources like the news articles.
 
@@ -102,7 +127,45 @@ Using service: Cognito, provided by: awscloudformation
 Successfully added resource cognito3da6ae94 locally
 ```
 
-### Add API (data) to your project
+### Push the configuration to the cloud
+
+```
+amplify push
+```
+
+## Adding sign-in and sign-out code
+
+Inside the MainActivity.java replace
+
+```java
+// TODO Add sign-in sign-out code
+```
+
+with
+
+```java
+if (AWSMobileClient.getInstance().isSignedIn()) {
+    AWSMobileClient.getInstance().signOut();
+    item.setTitle("Sign-in");
+    // TODO Add analytics event for sign-out, this will be added at a later step
+    break;
+}
+
+// TODO Add analytics event for sign-in, this will be added at a later step
+AWSMobileClient.getInstance().showSignIn(this, new Callback<UserStateDetails>() {
+    @Override
+    public void onResult(UserStateDetails result) {
+        item.setTitle("Sign-out");
+    }
+
+    @Override
+    public void onError(Exception e) {
+        Log.e(TAG, "onError: ", e);
+    }
+});
+```
+
+## Add API (data) to your project
 
 This will add AWS AppSync to front your data and Amazon DynamoDB as a data source to store your news articles and comments. The `model.graphql` file is provided in your project when prompted by `? Do you have an annotated GraphQL schema? Yes` and `? Provide your schema file path: ./model.graphql`.
 
@@ -130,46 +193,9 @@ Successfully added resource test123 locally
 amplify push
 ```
 
-## Adding sign-in
+## Adding API (data) code
 
-Inside the MainActivity.java replace
-
-```java
-// TODO Add sign-in sign-out code
-```
-
-with
-
-```java
-if (AWSMobileClient.getInstance().isSignedIn()) {
-    AWSMobileClient.getInstance().signOut();
-    item.setTitle("Sign-in");
-    ClientFactory.getAnalyticsClient().recordEvent(
-            ClientFactory.getAnalyticsClient()
-                    .createEvent("ui")
-                    .withAttribute("clicked", "sign-out"));
-    break;
-}
-
-ClientFactory.getAnalyticsClient().recordEvent(
-        ClientFactory.getAnalyticsClient()
-                .createEvent("ui")
-                .withAttribute("clicked", "sign-in"));
-AWSMobileClient.getInstance().showSignIn(this, new Callback<UserStateDetails>() {
-    @Override
-    public void onResult(UserStateDetails result) {
-        item.setTitle("Sign-out");
-    }
-
-    @Override
-    public void onError(Exception e) {
-        Log.e(TAG, "onError: ", e);
-    }
-});
-```
-## Adding API (data)
-
-Inside NewsRepository.java replace
+Inside NewsRepository.java add code to retrieve the list of news articles by replacing
 
 ```java
 // TODO Add api (data) to list the news articles
@@ -199,9 +225,64 @@ client.query(listNewssQuery)
         });
 ```
 
-## Adding analytics events
+## Add analytics to your project
 
-Inside the DetailedActivity.java replace
+```
+amplify add analytics
+```
+
+Sample input and output
+
+```
+$ amplify add analytics
+Using service: Pinpoint, provided by: awscloudformation
+? Provide your pinpoint resource name: 307r1
+Adding analytics would add the Auth category to the project if not already added.
+? Apps need authorization to send analytics events. Do you want to allow guests and unauthentic
+ated users to send analytics events? (we recommend you allow this when getting started) true
+Successfully added auth resource locally.
+Successfully added resource 307r1 locally
+```
+
+### Adding analytics events
+
+#### Sign-in event
+
+Inside the MainActivity.java you can track sign-in events by replacing
+
+```java
+// TODO Add analytics event for sign-in
+```
+
+with
+
+```java
+ClientFactory.getAnalyticsClient().recordEvent(
+        ClientFactory.getAnalyticsClient()
+                .createEvent("ui")
+                .withAttribute("clicked", "sign-in"));
+```
+
+#### Sign-out event
+
+Inside the MainActivity.java you can track sign-out events by replacing
+
+```java
+// TODO Add analytics event for sign-out
+```
+
+with
+
+```java
+ClientFactory.getAnalyticsClient().recordEvent(
+            ClientFactory.getAnalyticsClient()
+                    .createEvent("ui")
+                    .withAttribute("clicked", "sign-out"));
+```
+
+#### Viewed news event
+
+Inside the DetailedActivity.java you can track which news articles are being looked at by replacing
 
 ```java
 // TODO Add analytics to your app
