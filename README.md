@@ -244,6 +244,12 @@ Successfully added auth resource locally.
 Successfully added resource 307r1 locally
 ```
 
+### Push the configuration to the cloud
+
+```
+amplify push
+```
+
 ### Adding analytics events
 
 #### Sign-in event
