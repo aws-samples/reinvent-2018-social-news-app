@@ -4,7 +4,7 @@ Build a social news app.
 
 Tools you will need:
 - [Android Studio 3.2](https://developer.android.com/studio/)
-  - Install an emulator for API level 28
+  - Install an emulator for API level 28 *or* you may use a real device with Android Marshmallow and above
 - [Node.js/npm](https://nodejs.org)
 - An AWS account
 
@@ -203,13 +203,13 @@ client.query(listNewssQuery)
 
 Inside the DetailedActivity.java replace
 
-```
+```java
 // TODO Add analytics to your app
 ```
 
 with
 
-```
+```java
 ClientFactory.getAnalyticsClient().recordEvent(
         ClientFactory.getAnalyticsClient().createEvent("ui").withAttribute("clicked", "newsId-" + newsId)
 );
