@@ -2,21 +2,27 @@
 
 Build a social news app.
 
+Tools you will need:
+- [Android Studio 3.2](https://developer.android.com/studio/)
+  - Install an emulator for API level 28
+- [Node.js/npm](https://nodejs.org)
+- An AWS account
+
 ## Install AWS Amplify CLI
 
-You will need th cli to provision your backend resources
+You will need the CLI to provision your backend resources.
 
 ```
 npm install -g @aws-amplify/cli
 ```
 
-After it has been installed configure it with your preferences
+After it has been installed configure it with your preferences.
 
 ```
 amplify configure
 ```
 
-## Clone the repo
+## Clone the repository
 
 Find a workspace to clone the repository.
 
@@ -24,7 +30,7 @@ Find a workspace to clone the repository.
 git clone git@github.com:aws-samples/reinvent-2018-social-news-app.git
 ```
 
-Change your directory into the project
+Change your directory into the project.
 
 ```
 cd reinvent-2018-social-news-app/SocialNews
@@ -33,6 +39,8 @@ cd reinvent-2018-social-news-app/SocialNews
 ## Provision your backend
 
 ### Initialize your project
+
+This will create an `amplify` folder within your project to keep track of the state of your backend as you add authentication, api, and analytics.
 
 ```
 amplify init
@@ -78,7 +86,7 @@ Your project has been successfully initialized and connected to the cloud!
 
 ### Add auth to your project
 
-This will add Amazon Cognito Userpools and Amazon Cognito Identity pools to your project.
+This will add Amazon Cognito Userpools and Amazon Cognito Identity pools to your project. Amazon Cognito Userpools will be used to keep track of your users and give them accounts with username and password. Amazon Cognito Identity pools will then give those accounts permissions to access AWS resources like the news articles.
 
 ```
 amplify add auth
@@ -96,7 +104,7 @@ Successfully added resource cognito3da6ae94 locally
 
 ### Add API (data) to your project
 
-This will add AWS AppSync and provision a data source to store your news articles and comments in Amazon DynamoDB.
+This will add AWS AppSync to front your data and Amazon DynamoDB as a data source to store your news articles and comments. The `model.graphql` file is provided in your project when prompted by `? Do you have an annotated GraphQL schema? Yes` and `? Provide your schema file path: ./model.graphql`.
 
 ```
 amplify add api
@@ -126,69 +134,69 @@ amplify push
 
 Inside the MainActivity.java replace
 
-```
- // TODO Add sign-in sign-out code
+```java
+// TODO Add sign-in sign-out code
 ```
 
 with
 
-```
-                if (AWSMobileClient.getInstance().isSignedIn()) {
-                    AWSMobileClient.getInstance().signOut();
-                    item.setTitle("Sign-in");
-                    ClientFactory.getAnalyticsClient().recordEvent(
-                            ClientFactory.getAnalyticsClient()
-                                    .createEvent("ui")
-                                    .withAttribute("clicked", "sign-out"));
-                    break;
-                }
+```java
+if (AWSMobileClient.getInstance().isSignedIn()) {
+    AWSMobileClient.getInstance().signOut();
+    item.setTitle("Sign-in");
+    ClientFactory.getAnalyticsClient().recordEvent(
+            ClientFactory.getAnalyticsClient()
+                    .createEvent("ui")
+                    .withAttribute("clicked", "sign-out"));
+    break;
+}
 
-                ClientFactory.getAnalyticsClient().recordEvent(
-                        ClientFactory.getAnalyticsClient()
-                                .createEvent("ui")
-                                .withAttribute("clicked", "sign-in"));
-                AWSMobileClient.getInstance().showSignIn(this, new Callback<UserStateDetails>() {
-                    @Override
-                    public void onResult(UserStateDetails result) {
-                        item.setTitle("Sign-out");
-                    }
+ClientFactory.getAnalyticsClient().recordEvent(
+        ClientFactory.getAnalyticsClient()
+                .createEvent("ui")
+                .withAttribute("clicked", "sign-in"));
+AWSMobileClient.getInstance().showSignIn(this, new Callback<UserStateDetails>() {
+    @Override
+    public void onResult(UserStateDetails result) {
+        item.setTitle("Sign-out");
+    }
 
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e(TAG, "onError: ", e);
-                    }
-                });
+    @Override
+    public void onError(Exception e) {
+        Log.e(TAG, "onError: ", e);
+    }
+});
 ```
 ## Adding API (data)
 
 Inside NewsRepository.java replace
 
-```
+```java
 // TODO Add api (data) to list the news articles
 ```
 
 with
 
-```
-        ListNewssQuery listNewssQuery = ListNewssQuery.builder().build();
-        client.query(listNewssQuery)
-                .responseFetcher(AppSyncResponseFetchers.NETWORK_ONLY)
-                .enqueue(new GraphQLCall.Callback<ListNewssQuery.Data>() {
-                    @Override
-                    public void onResponse(@Nonnull Response<ListNewssQuery.Data> response) {
-                        if (response.hasErrors()) {
-                            Log.e(TAG, "onResponse: errors:" + response.errors());
-                            return;
-                        }
-                        List<News> newsList = marshallListNews(response);
-                        newsDao.save(newsList);
-                    }
+```java
+ListNewssQuery listNewssQuery = ListNewssQuery.builder().build();
+client.query(listNewssQuery)
+        .responseFetcher(AppSyncResponseFetchers.NETWORK_ONLY)
+        .enqueue(new GraphQLCall.Callback<ListNewssQuery.Data>() {
+            @Override
+            public void onResponse(@Nonnull Response<ListNewssQuery.Data> response) {
+                if (response.hasErrors()) {
+                    Log.e(TAG, "onResponse: errors:" + response.errors());
+                    return;
+                }
+                List<News> newsList = marshallListNews(response);
+                newsDao.save(newsList);
+            }
 
-                    @Override
-                    public void onFailure(@Nonnull ApolloException e) {
-                        Log.e(TAG, "Failed to refresh news item", e);
-                    }
-                });
+            @Override
+            public void onFailure(@Nonnull ApolloException e) {
+                Log.e(TAG, "Failed to refresh news item", e);
+            }
+        });
 ```
 
 ## Adding analytics events
@@ -202,9 +210,9 @@ Inside the DetailedActivity.java replace
 with
 
 ```
-        ClientFactory.getAnalyticsClient().recordEvent(
-                ClientFactory.getAnalyticsClient().createEvent("ui").withAttribute("clicked", "newsId-" + newsId)
-        );
+ClientFactory.getAnalyticsClient().recordEvent(
+        ClientFactory.getAnalyticsClient().createEvent("ui").withAttribute("clicked", "newsId-" + newsId)
+);
 ```
 
 ## License Summary
