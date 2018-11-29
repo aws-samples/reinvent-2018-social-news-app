@@ -304,6 +304,12 @@ ClientFactory.getAnalyticsClient().recordEvent(
 );
 ```
 
+## Validating your configuration
+
+When you open the app for the first time, you will see a blank screen. This is because there is no data in your Amazon DynamoDB table.
+
+In the upper-right hand corner there is a menu to upload sample data. After the upload, you should refresh the data, again in the upper-right hand corner and then the articles should show up.
+
 ## License Summary
 
 This sample code is made available under a modified MIT license. See the LICENSE file.
