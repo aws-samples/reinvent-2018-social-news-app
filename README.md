@@ -22,6 +22,8 @@ After it has been installed configure it with your preferences.
 amplify configure
 ```
 
+Make sure that you save the access and secret key from the console and then input the access and secret keys when prompted by the sentence `Enter the access key of the newly created user:` on the terminal.
+
 Sample input and output:
 
 ```
