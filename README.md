@@ -51,21 +51,26 @@ This would update/create the AWS Profile in your local machine
 Successfully set up the new user.
 ```
 
-## Clone the repository
+## Clone the repository - CLI
 
-Find a workspace to clone the repository.
+Choose a directory to use a workspace. Once there, clone the repository.
 
 ```
 git clone https://github.com/aws-samples/reinvent-2018-social-news-app.git
 ```
+There are two versions of the application in the repo. SocialNews, and SocialNews-complete. SocialNews-complete is a reference version in which all of the following steps have already been completed. The rest of this README will involve adding authentication, querying, and analytics to SocialNews.
 
-Change your directory into the project.
+Change your directory into the non-complete project.
 
 ```
 cd reinvent-2018-social-news-app/SocialNews
 ```
 
-## Initialize your project
+## Open Project in Android Studio
+
+Open Android Studio 3.2+. Go to the top bar and click **File** -> **Open**. In the pop-up, navigate to the location where you cloned the repo earlier. Select "SocialNews". Android Studio will then import the code and interpret it as an Android Project.
+
+## Initialize your project - CLI
 
 This will create an `amplify` folder within your project to keep track of the state of your backend as you add authentication, api, and analytics.
 
@@ -111,7 +116,7 @@ CREATE_COMPLETE ocialews-20181126121957 AWS::CloudFormation::Stack Mon Nov 26 20
 Your project has been successfully initialized and connected to the cloud!
 ```
 
-## Add auth to your project
+## Add auth to your project - CLI
 
 This will add Amazon Cognito Userpools and Amazon Cognito Identity pools to your project. Amazon Cognito Userpools will be used to keep track of your users and give them accounts with username and password. Amazon Cognito Identity pools will then give those accounts permissions to access AWS resources like the news articles.
 
@@ -129,13 +134,13 @@ Using service: Cognito, provided by: awscloudformation
 Successfully added resource cognito3da6ae94 locally
 ```
 
-### Push the configuration to the cloud
+### Push the configuration to the cloud - CLI
 
 ```
 amplify push
 ```
 
-## Adding sign-in and sign-out code
+## Adding sign-in and sign-out code - Text Editor
 
 Inside the MainActivity.java replace
 
@@ -167,7 +172,7 @@ AWSMobileClient.getInstance().showSignIn(this, new Callback<UserStateDetails>() 
 });
 ```
 
-## Add API (data) to your project
+## Add API (data) to your project - CLI
 
 This will add AWS AppSync to front your data and Amazon DynamoDB as a data source to store your news articles and comments. The `model.graphql` file is provided in your project when prompted by `? Do you have an annotated GraphQL schema? Yes` and `? Provide your schema file path: ./model.graphql`.
 
@@ -189,14 +194,13 @@ GraphQL schema compiled successfully. Edit your schema at /Users/bimin/github/re
 Successfully added resource test123 locally
 ```
 
-### Push the configuration to the cloud
+### Push the configuration to the cloud - CLI
 
 ```
 amplify push
 ```
 
-## Adding API (data) code
-
+## Adding API (data) code - Text Editor
 Inside NewsRepository.java add code to retrieve the list of news articles by replacing
 
 ```java
@@ -227,7 +231,7 @@ client.query(listNewssQuery)
         });
 ```
 
-## Add analytics to your project
+## Add analytics to your project - CLI
 
 ```
 amplify add analytics
@@ -246,13 +250,13 @@ Successfully added auth resource locally.
 Successfully added resource 307r1 locally
 ```
 
-### Push the configuration to the cloud
+### Push the configuration to the cloud - CLI
 
 ```
 amplify push
 ```
 
-### Adding analytics events
+### Adding analytics events - Text Editor
 
 #### Sign-in event
 
@@ -306,10 +310,27 @@ ClientFactory.getAnalyticsClient().recordEvent(
 
 ## Validating your configuration
 
+### Building and Deploying through Android Studio
+
+In order to deploy your application to a test environment, follow he [Android Studio Build/Deploy Instructions](https://developer.android.com/studio/run/)
+
+### Initial Sign-In
+
 When you open the app for the first time, you will see a blank screen. This is because there is no data in your Amazon DynamoDB table.
 
 In the upper-right hand corner there is a menu to upload sample data. After the upload, you should refresh the data, again in the upper-right hand corner and then the articles should show up.
 
+### Viewing Analystics
+
+Go to the AWS Console -> **Pinpoint**.
+Within Pinpoint, expand the **Analytics** drop-down on the left and select **Events**
+
+## Cleanup
+
+From the root directory you've been working in, run
+```
+amplify delete
+```
 ## License Summary
 
 This sample code is made available under a modified MIT license. See the LICENSE file.
