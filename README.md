@@ -328,9 +328,15 @@ Within Pinpoint, expand the **Analytics** drop-down on the left and select **Eve
 ## Cleanup
 
 From the root directory you've been working in, run
+
 ```
 amplify delete
 ```
+
+## Additional help
+
+If you need help or have general questions you may reach out to use on our SDK repository by opening an issue [aws-amplify/aws-sdk-android](https://github.com/aws-amplify/aws-sdk-android)
+
 ## License Summary
 
 This sample code is made available under a modified MIT license. See the LICENSE file.
